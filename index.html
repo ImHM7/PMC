@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
-<title>Price Calculator</title>
+<title>PMC</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,sans-serif;background:#1c1c1e;color:#fff;padding:15px}
 .box{background:#2c2c2e;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.6);max-width:600px;margin:auto}
 header{background:#007aff;color:#fff;padding:25px;text-align:center}
-header h1{font-size:22px}
+header h1{font-size:26px;font-weight:bold}
 .inner{padding:16px}
 label{font-weight:bold;display:block;margin-bottom:8px}
 input[type=number]{
@@ -33,17 +33,15 @@ input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 .rojo{border-left-color:#ff3b30}
 .amarillo{border-left-color:#ffcc00}
 .verde{border-left-color:#34c759}
-button{background:#007aff;color:#fff;border:none;padding:18px;border-radius:12px;width:100%;font-size:18px;margin-top:10px;cursor:pointer}
 </style>
 </head>
 <body>
 <div class="box">
-  <header><h1>🧾 Price Calculator</h1></header>
+  <header><h1>💲 PMC</h1></header>
   <div class="inner">
     <label>Product Cost ($)</label>
     <input type="number" id="c" placeholder="0" oninput="calc()">
     <div id="r"></div>
-    <button onclick="calc()">🔄 Calculate Prices</button>
   </div>
 </div>
 <script>
