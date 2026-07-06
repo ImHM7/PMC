@@ -2,63 +2,267 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
-<title>PMC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHServices | Calculadora de Precio</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,sans-serif;background:#1c1c1e;color:#fff;padding:15px}
-.box{background:#2c2c2e;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.6);max-width:600px;margin:auto}
-header{background:#007aff;color:#fff;padding:25px;text-align:center}
-header h1{font-size:26px;font-weight:bold}
-.inner{padding:16px}
-label{font-weight:bold;display:block;margin-bottom:8px}
-input[type=number]{
-  -webkit-appearance:none;
-  appearance:none;
-  display:block;
-  width:100%;
-  padding:16px;
-  font-size:24px;
-  background:#3c3c3e;
-  color:#fff;
-  border:1px solid #555;
-  border-radius:12px;
-  margin-bottom:14px;
-  text-align:left;
-}
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
-.res{padding:16px;margin:10px 0;border-left:6px solid;border-radius:12px;background:#3c3c3e}
-.precio{font-size:30px;font-weight:bold;margin:6px 0}
-.rojo{border-left-color:#ff3b30}
-.amarillo{border-left-color:#ffcc00}
-.verde{border-left-color:#34c759}
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
+
+  :root {
+    --black: #0A0A0A;
+    --charcoal: #161513;
+    --gold: #A8863E;
+    --gold-light: #D9BC7B;
+    --gold-dim: #6B5526;
+    --text: #EDE7D3;
+    --text-dim: #A69C82;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(168,134,62,0.10), transparent 45%),
+      radial-gradient(circle at 90% 100%, rgba(168,134,62,0.06), transparent 50%);
+    color: var(--text);
+    font-family: 'Barlow Condensed', sans-serif;
+    min-height: 100vh;
+    padding: 28px 18px 60px;
+  }
+
+  .wrap { max-width: 460px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-top: 6px;
+  }
+
+  .input-card {
+    background: var(--charcoal);
+    border: 1px solid rgba(168,134,62,0.3);
+    border-radius: 4px;
+    padding: 22px 20px;
+    margin-bottom: 24px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: baseline;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 8px;
+  }
+
+  .currency {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-right: 8px;
+  }
+
+  input[type="number"] {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    color: var(--text);
+    letter-spacing: 1px;
+    width: 100%;
+  }
+
+  input[type="number"]::placeholder { color: #4a4638; }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .results { display: grid; gap: 16px; }
+
+  .result-card {
+    background: linear-gradient(155deg, var(--charcoal), #100f0d);
+    border: 1px solid rgba(168,134,62,0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+  }
+
+  .result-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px 12px;
+  }
+
+  .margin-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--gold-light);
+  }
+
+  .margin-tag span { color: var(--gold-dim); font-size: 14px; font-family: 'Barlow Condensed', sans-serif; }
+
+  .breakdown {
+    padding: 0 18px 18px;
+    font-size: 15px;
+    color: var(--text-dim);
+  }
+
+  .breakdown div {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .breakdown div:last-child { border-bottom: none; }
+
+  .total-line {
+    background: rgba(168,134,62,0.10);
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid rgba(168,134,62,0.3);
+  }
+
+  .total-label {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .total-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    color: var(--gold-light);
+  }
+
+  .empty-hint {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 14px;
+    padding: 20px 0;
+  }
 </style>
 </head>
 <body>
-<div class="box">
-  <header><h1>💲 PMC</h1></header>
-  <div class="inner">
-    <label>Product Cost ($)</label>
-    <input type="number" id="c" placeholder="0" oninput="calc()">
-    <div id="r"></div>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">GHServices</div>
+      <h1>PRECIO DE VENTA</h1>
+    </header>
+
+    <div class="input-card">
+      <label for="costo">Costo del producto</label>
+      <div class="input-row">
+        <span class="currency">$</span>
+        <input type="number" id="costo" placeholder="0.00" inputmode="decimal" oninput="calcular()">
+      </div>
+    </div>
+
+    <div class="input-card">
+      <label for="accesorios">Accesorios</label>
+      <div class="input-row">
+        <span class="currency">$</span>
+        <input type="number" id="accesorios" placeholder="0.00" inputmode="decimal" oninput="calcular()">
+      </div>
+    </div>
+
+    <div id="resultados" class="results">
+      <div class="empty-hint">Ingresa el costo para ver los precios</div>
+    </div>
+
   </div>
-</div>
+
 <script>
-function f(n){
-  return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',minimumFractionDigits:0}).format(Math.round(n));
+function formatMoney(n) {
+  return n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-function calc(){
-  var c=parseFloat(document.getElementById('c').value)||0;
-  var p35=c?Math.round(c/0.65):0;
-  var p40=c?Math.round(c/0.6):0;
-  var p45=c?Math.round(c/0.55):0;
-  document.getElementById('r').innerHTML=
-    '<div class="res rojo"><strong>35% margin</strong><div class="precio" style="color:#ff3b30">'+f(p35)+'</div><small>Profit: '+f(p35-c)+'</small></div>'+
-    '<div class="res amarillo"><strong>40% margin</strong><div class="precio" style="color:#ffcc00">'+f(p40)+'</div><small>Profit: '+f(p40-c)+'</small></div>'+
-    '<div class="res verde"><strong>45% margin</strong><div class="precio" style="color:#34c759">'+f(p45)+'</div><small>Profit: '+f(p45-c)+'</small></div>';
+
+function calcular() {
+  const costoInput = document.getElementById('costo').value;
+  const costo = parseFloat(costoInput);
+  const accesoriosInput = document.getElementById('accesorios').value;
+  const accesorios = parseFloat(accesoriosInput) || 0;
+  const resultados = document.getElementById('resultados');
+
+  if (!costoInput || isNaN(costo) || costo <= 0) {
+    resultados.innerHTML = '<div class="empty-hint">Ingresa el costo para ver los precios</div>';
+    return;
+  }
+
+  const margenes = [0.375];
+  let html = '';
+
+  margenes.forEach(m => {
+    const precioVenta = costo / (1 - m);
+    const ganancia = precioVenta - costo;
+    const subtotal = precioVenta + accesorios;
+    const iva = subtotal * 0.16;
+    const total = subtotal + iva;
+
+    const accesoriosLine = accesorios > 0
+      ? `<div><span>Accesorios</span><span>$${formatMoney(accesorios)}</span></div>`
+      : '';
+
+    html += `
+      <div class="result-card">
+        <div class="result-head">
+          <div class="margin-tag">${(m*100).toFixed(0)}% <span>margen</span></div>
+        </div>
+        <div class="breakdown">
+          <div><span>Costo</span><span>$${formatMoney(costo)}</span></div>
+          <div><span>Ganancia</span><span>$${formatMoney(ganancia)}</span></div>
+          <div><span>Precio de venta</span><span>$${formatMoney(precioVenta)}</span></div>
+          ${accesoriosLine}
+          <div><span>IVA (16%)</span><span>$${formatMoney(iva)}</span></div>
+        </div>
+        <div class="total-line">
+          <span class="total-label">Total a cobrar</span>
+          <span class="total-amount">$${formatMoney(total)}</span>
+        </div>
+      </div>
+    `;
+  });
+
+  resultados.innerHTML = html;
 }
-window.onload=calc;
 </script>
 </body>
 </html>
