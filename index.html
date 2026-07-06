@@ -228,10 +228,7 @@ function calcular() {
 
     html += `
       <div class="result-card">
-        <div class="result-head">
-          <div class="margin-tag">${(m*100).toFixed(0)}% <span>margen</span></div>
-        </div>
-        <div class="breakdown">
+        <div class="breakdown" style="padding-top: 18px;">
           <div><span>Costo</span><span>$${formatMoney(costo)}</span></div>
           <div><span>Ganancia</span><span>$${formatMoney(ganancia)}</span></div>
           <div><span>Precio de venta</span><span>$${formatMoney(precioVenta)}</span></div>
