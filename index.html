@@ -196,14 +196,6 @@
       </div>
     </div>
 
-    <div class="input-card">
-      <label for="accesorios">Accesorios</label>
-      <div class="input-row">
-        <span class="currency">$</span>
-        <input type="number" id="accesorios" placeholder="0.00" inputmode="decimal" oninput="calcular()">
-      </div>
-    </div>
-
     <div id="resultados" class="results">
       <div class="empty-hint">Ingresa el costo para ver los precios</div>
     </div>
@@ -218,8 +210,6 @@ function formatMoney(n) {
 function calcular() {
   const costoInput = document.getElementById('costo').value;
   const costo = parseFloat(costoInput);
-  const accesoriosInput = document.getElementById('accesorios').value;
-  const accesorios = parseFloat(accesoriosInput) || 0;
   const resultados = document.getElementById('resultados');
 
   if (!costoInput || isNaN(costo) || costo <= 0) {
@@ -233,13 +223,8 @@ function calcular() {
   margenes.forEach(m => {
     const precioVenta = costo / (1 - m);
     const ganancia = precioVenta - costo;
-    const subtotal = precioVenta + accesorios;
-    const iva = subtotal * 0.16;
-    const total = subtotal + iva;
-
-    const accesoriosLine = accesorios > 0
-      ? `<div><span>Accesorios</span><span>$${formatMoney(accesorios)}</span></div>`
-      : '';
+    const iva = precioVenta * 0.16;
+    const total = precioVenta + iva;
 
     html += `
       <div class="result-card">
@@ -250,7 +235,6 @@ function calcular() {
           <div><span>Costo</span><span>$${formatMoney(costo)}</span></div>
           <div><span>Ganancia</span><span>$${formatMoney(ganancia)}</span></div>
           <div><span>Precio de venta</span><span>$${formatMoney(precioVenta)}</span></div>
-          ${accesoriosLine}
           <div><span>IVA (16%)</span><span>$${formatMoney(iva)}</span></div>
         </div>
         <div class="total-line">
